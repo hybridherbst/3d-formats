@@ -43,17 +43,20 @@ Need to set bone orientation manually, not use the default
 ## Animations
 
 - FBX: AnimStacks + AnimLayer + AnimCurveNode (AnimLayer rarely used / usually only one)  
-- Blender: NLA strips + actions  
+- Blender: NLA strips + actions + F-Curves   
 - glTF: animations + channels  
-- USD: clipSets + timeSamples (without clip sets, only one animation is supported)  
+- USD: [valueClips/clipSets](https://graphics.pixar.com/usd/release/api/_usd__page__value_clips.html) + timeSamples on attributes (without clip sets, only one animation is supported)  
 - Unity: AnimationClip + AnimationCurve (Animators can blend between multiple AnimationClips)  
 - Unreal: AnimSequence + AnimCurves  
 - three.js: AnimationClip + KeyframeTrack (Mixers can blend between multiple AnimationClips)  
 
-### Interpolation Types
-- Unity: per keyframe  
-- glTF: per channel  
-- Blender: per keyframe  
+### Interpolation Types  
+
+- Unity: per keyframe – constant, linear, freeform (configured via in/out tangents)  
+- glTF: per channel – constant, linear, cubic  
+- three.js: per AnimationTrack – Discrete (constant), Linear, Smooth (Cubic), can create custom interpolators    
+- Blender: per keyframe – constant, linear, bézier (configured via in/out tangents)  
+- USD: per attribute – held (constant) or linear  
 
 ## Hard Workflows
 
