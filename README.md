@@ -22,7 +22,37 @@ Multiple UV Sets: yes
 Texture Transform: yes  
 Transparency: not fully supported    
 
+## Textures
+
+### UV Coordinate System
+
+Starts top left or bottom left  
+
+### UV Range 0..1 or more
+
+Relationship to texture wrap modes  
+
+### UDIM-like usage
+
+## Lights
+
+Default orientation   
+Light values / real-world or not  
+
+## Cameras
+
+Default orientation  
+Default look direction - may be different between viewers, not just file formats  
+
 ## Skinning
+
+### Bone Orientation
+
+### Number of skin weights per bone
+
+### Number of Blend Shape weights taken into account
+
+### Multiple skins per file
 
 ### FBX 
 
@@ -42,6 +72,8 @@ Need to set bone orientation manually, not use the default
 
 ## Animations
 
+### Terminology
+
 - FBX: AnimStacks + AnimLayer + AnimCurveNode (AnimLayer rarely used / usually only one)  
 - Blender: NLA strips + actions + F-Curves   
 - glTF: animations + channels  
@@ -58,6 +90,12 @@ Need to set bone orientation manually, not use the default
 - Blender: per keyframe – constant, linear, bézier (configured via in/out tangents)  
 - USD: per attribute – held (constant) or linear  
 
+### Sequencing of animations
+
+Arranging animations on a timeline  
+Blending/Mixing of animations 
+Animation layers 
+
 ## Hard Workflows
 
 - import skinned + animated glTF file into Blender, make changes, export again
@@ -67,6 +105,7 @@ Need to set bone orientation manually, not use the default
 - import skinned + animated FBX file into Blender, make changes, export again
   - hierarchy will change if original FBX wasn't created in Blender
   - impossible to use in external tools since that extra hierarchy node breaks existing animation clips in other softwares (e.g. Unity)
+  - Unreal [seems to have fixed this](https://krisredbeard.wordpress.com/tutorials/tutorial-prevent-blender-fbx-exporter-adding-extra-root-bone/) on an import level (by skipping explicitly the "Armature" node if it exists)
 
 - bake lightmaps in Blender that take Filmic into account and export to other softwares (bake the look transform in)  
   - image editor has an option to bake LUT into textures  
