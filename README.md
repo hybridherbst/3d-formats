@@ -64,3 +64,6 @@ Need to set bone orientation manually, not use the default
 - import skinned + animated FBX file into Blender, make changes, export again
   - hierarchy will change if original FBX wasn't created in Blender
   - impossible to use in external tools since that extra hierarchy node breaks existing animation clips in other softwares (e.g. Unity)
+
+- bake lightmaps in Blender that take Filmic into account and export to other softwares (bake the look transform in)  
+  - image editor has an option to bake LUT into textures  
