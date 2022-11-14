@@ -51,6 +51,6 @@ Need to set bone orientation manually, not use the default
 - three.js: AnimationClip + KeyframeTrack (Mixers can blend between multiple AnimationClips)  
 
 ### Interpolation Types
-- Unity: per keyframe
-- glTF: per 
-- Blender: 
+- Unity: per keyframe  
+- glTF: per channel  
+- Blender: per keyframe  
