@@ -54,3 +54,13 @@ Need to set bone orientation manually, not use the default
 - Unity: per keyframe  
 - glTF: per channel  
 - Blender: per keyframe  
+
+## Hard Workflows
+
+- import skinned + animated glTF file into Blender, make changes, export again
+  - need to be careful with bone orientations, Blender likes flipping into its own format but doesn't allow flipping back
+  - working in Blender is a bit annoying as bones look "wrong"
+
+- import skinned + animated FBX file into Blender, make changes, export again
+  - hierarchy will change if original FBX wasn't created in Blender
+  - impossible to use in external tools since that extra hierarchy node breaks existing animation clips in other softwares (e.g. Unity)
