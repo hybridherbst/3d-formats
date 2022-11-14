@@ -106,6 +106,7 @@ Animation layers
   - hierarchy will change if original FBX wasn't created in Blender
   - impossible to use in external tools since that extra hierarchy node breaks existing animation clips in other softwares (e.g. Unity)
   - Unreal [seems to have fixed this](https://krisredbeard.wordpress.com/tutorials/tutorial-prevent-blender-fbx-exporter-adding-extra-root-bone/) on an import level (by skipping explicitly the "Armature" node if it exists)
+  - people have went as far as [making modifications to the default exporter in custom ones](https://github.com/A-Ribeiro/CustomBlenderFBXExporter) to allow skipping this (not tested)
 
 - bake lightmaps in Blender that take Filmic into account and export to other softwares (bake the look transform in)  
   - image editor has an option to bake LUT into textures  
