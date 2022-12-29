@@ -30,14 +30,45 @@ Starts top left or bottom left
 
 ### UV Range 0..1 or more
 
-Relationship to texture wrap modes  
+UV is a per-vertex attribute.  
+It is usually used for texturing - defining which parts of a texture end up on which part of the model.  
+There's a distinction between non-overlapping UVs (for example for lightmaps or when painting on a model) and overlapping UVs (multiple parts of the model get the same section of the texture applied, for example with trim sheets).  
 
-### UDIM-like usage
+UV ranges outside 0..1 are sometimes used:
+- to distinguish between materials (also called UDIMs) - e.g. range 0..1 is material A, range 1..2 is material B
+- for tiling textures - the texture repeats over the surface of the model
+- for texture arrays - 0..1 is index 0, 1..2 is index 1, can be used both in X and Y
 
-## Lights
+### Relationship to texture wrap modes 
+
+Wrap Modes specify what happens with a texture when accessing data outside its normalized 0..1 range. 
+Typically, formats support at least Clamp and Repeat. Sometimes, there's also Mirror. Often wrap modes can be specified separately for U and V directions.  
+
+Wrap modes are especially important to get right for textures with mimaps where opposite edges look different. A good example is a grass texture — typically it will be transparent at the top and opaque at the bottom, and repeating in X. So it would have wrap modes U: Repeat and V: Clamp. 
+
+## Lights and Shadows
+
+### Realtime approximations vs. Path tracing
+
+### Lights
 
 Default orientation   
 Light values / real-world or not  
+Falloff  
+Inner and outer radius  
+Punctual light sources: Spot, Directional, Point  
+Image-Based Lighting  
+Ambient Lights  
+Area, Tube, Spherical  
+IES profiles  
+
+### Shadows
+
+Realtime (usually shadow maps)  
+Baked (precalculated)  
+Hard vs. Soft shadows  
+Very soft shadows  
+Shadow cascades  
 
 ## Cameras
 
