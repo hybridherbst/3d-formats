@@ -34,6 +34,8 @@ UV is a per-vertex attribute.
 It is usually used for texturing - defining which parts of a texture end up on which part of the model.  
 There's a distinction between non-overlapping UVs (for example for lightmaps or when painting on a model) and overlapping UVs (multiple parts of the model get the same section of the texture applied, for example with trim sheets).  
 
+Vertices can store zero, one, or more sets of UV coordinates. Commonly one or two are supported, with some formats supporting 8 or more. A typical case is storing UVs for regular texturing in the first channel, and having a second set of UVs in the second channel for lightmaps or other cases.  
+
 UV ranges outside 0..1 are sometimes used:
 - to distinguish between materials (also called UDIMs) - e.g. range 0..1 is material A, range 1..2 is material B
 - for tiling textures - the texture repeats over the surface of the model
@@ -74,16 +76,57 @@ Shadow cascades
 
 Default orientation  
 Default look direction - may be different between viewers, not just file formats  
+Some viewers by default look _at_ the forward-facing side of a model, some viewers look _along_ the forward direction. 
+For example, while coordinate systems match between glTF and USD, the default view direction is flipped.  
 
 ## Skinning
 
+### Bones and skins
+
+Many models require soft parts and deformations. To achieve this, a technique commonly used is "rigging" (creating bone objects with a hierarchical relationship, also called skeleton) and "skinning" (defining how bones affect the model).  
+
+Bones usually have a bind pose (the orientation they have in relation to vertices) and vertices store bone weights (which bones influence them and how much). Typically, for a deformable model (such as a human hand) each vertex is affected by multiple bones, while for a rigid model (such as a robot) each vertex may only be affected by a single bone, while some wires may be affected by multiple.  
+
 ### Bone Orientation
 
-### Number of skin weights per bone
-
-### Number of Blend Shape weights taken into account
+Some softwares are opinionated about which axis a bone must be aligned on. Some are using forward, while others use up, which often leads to difficulties when exchanging already rigged data between softwares, especially when constraints (kinematic chains) are used.  
 
 ### Multiple skins per file
+
+### Implementation Details
+
+Usually 1, 2, 4, 8 or more bones can influence a single vertex (has a performance impact). Sometimes this is configurable (for example in Unity).  
+Since skinned meshes are usually driven by bones, their own transformation doesn't / shouldn't matter. Despite this, transforming the skinned mesh itself can lead to culling errors or lighting problems. 
+Some formats enforce bones to all be hierarchical children of the skinned mesh, others allow arbitrary hierarchies. 
+
+## Blend Shapes
+
+In some cases, deformations are too complex to represent them with bones. One example of such complex deformations are animated faces.  
+To represent them, additional data can be stored per vertex that defines additional vertex positions. These are called blend shapes, shape keys, morph targets or similar.  
+
+Blend shapes can usually store additional copies of existing per-vertex data, such as positions, normals, or tangents. Some formats also allow storing color data or UV data as blend shapes. 
+Usually, data is stored additively — that means only the difference in data to the base mesh is stored. Often, only a few vertices differ between shapes (for example, a small wrinkle in a face), so only saving the difference reduces storage. This is called _sparse_ data in some formats.  
+
+Some formats (e.g. glTF) define that viewers must recalculate normal and tangent data when missing, which means often only vertices need to be stored.  
+
+Blend shapes can and often are combined with bone animations. Typical cases include humanoid meshes with rigged heads (neck/skull/yaw/eyes) and shapes for facial expression. 
+
+### Common systems 
+
+FACS
+Apple
+Google
+
+### Target count limitations
+
+Viewers support a varying amount of blend shapes. Some only support 4 or 8, which is usually not sufficient for complex facial animation. Many viewers support a large number (hundreds) of blend shapes.  
+
+### Implementation Details
+
+Blend shapes are efficient to calculate on the GPU but rather expensive on the CPU, so some operations are slow. This includes 
+culling / bounding box calculations, or finding intersections with meshes with blend shapes. 
+Usually, blend shapes are defined and used with normalized weights 0..1, but technically weights can be any number (both positive and negative).  
+Viewers that support only a limited amount of blend shapes have varying strategies for which targets get used. Some just take the first N shapes, others sort and take the first N shapes applying to each vertex.  
 
 ### FBX 
 
