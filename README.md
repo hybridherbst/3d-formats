@@ -89,9 +89,11 @@ Bones usually have a bind pose (the orientation they have in relation to vertice
 
 ### Bone Orientation
 
-Some softwares are opinionated about which axis a bone must be aligned on. Some are using forward, while others use up, which often leads to difficulties when exchanging already rigged data between softwares, especially when constraints (kinematic chains) are used.  
+Some softwares are opinionated about which axis a bone must be aligned on (which axis is forward, which axis is up). This often leads to difficulties when exchanging already rigged data between softwares, especially when constraints (kinematic chains) are used.  
 
 ### Multiple skins per file
+
+Most file formats allow storing multiple skinned meshes in one file. Support for im- and exporting such data varies and can cause problems. 
 
 ### Implementation Details
 
@@ -128,22 +130,6 @@ culling / bounding box calculations, or finding intersections with meshes with b
 Usually, blend shapes are defined and used with normalized weights 0..1, but technically weights can be any number (both positive and negative).  
 Viewers that support only a limited amount of blend shapes have varying strategies for which targets get used. Some just take the first N shapes, others sort and take the first N shapes applying to each vertex.  
 
-### FBX 
-
-Blender adds an empty node called "Armature" on export.  
-This is problematic when a FBX file has been created e.g. in Maya (exports without such a root node).  
-Blender has options what to do with the root (Null, Root, LimbNode) but neither of those skips the object.  
-
-Unreal removes "Armature" root nodes by default to counter Blender behaviour.  
-Unity does not remove "Armature" root nodes and doesn't have an option for it.   
-
-Blender Docs: https://docs.blender.org/manual/en/3.3/addons/import_export/scene_fbx.html
-> FBX bones seems to be -X aligned, Blender’s are Y aligned  
-
-### Skinned glTF Import in Blender
-
-Need to set bone orientation manually, not use the default  
-
 ## Animations
 
 ### Terminology
@@ -169,6 +155,20 @@ Need to set bone orientation manually, not use the default
 Arranging animations on a timeline  
 Blending/Mixing of animations 
 Animation layers 
+
+# Formats
+
+## FBX 
+
+Blender adds an empty node called "Armature" on export.  
+This is problematic when a FBX file has been created e.g. in Maya (exports without such a root node).  
+Blender has options what to do with the root (Null, Root, LimbNode) but neither of those skips the object.  
+
+Unreal removes "Armature" root nodes by default to counter Blender behaviour.  
+Unity does not remove "Armature" root nodes and doesn't have an option for it.   
+
+Blender Docs: https://docs.blender.org/manual/en/3.3/addons/import_export/scene_fbx.html
+> FBX bones seems to be -X aligned, Blender’s are Y aligned    
 
 ## Hard Workflows
 
