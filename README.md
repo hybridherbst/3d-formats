@@ -22,6 +22,14 @@ Multiple UV Sets: yes
 Texture Transform: yes  
 Transparency: not fully supported    
 
+### Spec  
+- [Spec and Grammar for USDA](https://github.com/PixarAnimationStudios/USD/pull/2126)  
+- [USD Crate format Documentation](https://github.com/PixarAnimationStudios/USD/pull/2086)    
+
+### Links  
+- https://github.com/matiascodesal/awesome-usd  
+- https://remedy-entertainment.github.io/USDBook/  
+
 ## Textures
 
 ### UV Coordinate System
