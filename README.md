@@ -223,6 +223,82 @@ Animation layers
 - Unity: AudioSource / AudioClip
 - three.js: PositionalAudio / Audio
 
+## Normal Maps
+
+Object space vs. tangent space  
+Tangent space explicit (saved in the file) or implicit (caluclated)  
+MiKKtSpace vs. other tagent space definitions 
+XYZ format vs. DXT5nm format (1X1Y) (Unity) vs. XXXY format (toktx)  
+
+## LODs
+
+FBX: partially, by naming convention ("LOD_X")
+USD: no
+glTF: yes, via MSFT_lod extension
+
+## Skinned Meshes / Skeletons / Bones
+
+FBX: 
+- bones are regular nodes and part of the hierarchy
+- bones can
+
+USD: arbitrary number of skeletons per file
+- Skeleton / SkelRoot / SkelAnim
+- bones form a virtual hierarchy (they are not nodes in the scene hierarchy) and need to be animated separately
+- thus they must be virtual childs of their SkelRoot
+- nodes can't be parented to bones
+- virtual hierarchy is defined by string arrays (e.g. `["Bone1/Bone2", "Bone3", "Bone4/Bone5"]`)
+
+glTF: arbitrary number of skeletons per file
+- bones are regular nodes and part of the hierarchy
+- bones can be used by multiple skeletons
+- bones don't need to be parented to their skeleton or each other
+
+## Cameras
+
+## Lights
+
+USD: [UsdLux](https://openusd.org/release/api/usd_lux_page_front.html)
+> lights with a primary axis emit along -Z
+> no specification for what the power unit actually is
+Lights are treated as having a size (default diameter 1 unit), with an extra attribute treatAsPoint
+- UsdLuxCylinderLight
+- UsdLuxDiskLight
+- UsdLuxDistantLight
+- UsdLuxDomeLight
+- UsdLuxRectLight
+- UsdLuxSphereLight
+- MeshLightAPI/VolumeLightAPI for turning prims into lights (emissive meshes)
+- Decay: physical (inverse square)
+- control over shadow behaviour with UsdLuxShadowAPI
+- light color can be specified
+
+glTF: [KHR_lights_punctual](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_lights_punctual/README.md)
+> an untransformed light points down the -Z axis
+> The light's transform is affected by the node's world scale, but all properties of the light (such as range and intensity) are unaffected
+Lights are treated as punctual (zero size). 
+- directional (lux (lm/m2))
+- point (candela (lm/sr))
+- spot (candela (lm/sr))
+  - inner/outer cone angle
+- Decay: physical (inverse square) and additional falloff with a "range" parameter
+- Shadows: not defined in the format, up to the application
+- light color can be specified
+
+FBX: [FBXLight](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_light.html#ad5d0e87f61ba99c47a539492df7917a1)
+- Point 	
+- Directional 	
+- Spot 	
+- Area (Rectangle, Sphere) 	
+- Volume
+- DecayType: None, Linear, Quadratic, Cubic and additional near/far attenuation
+- Shadows: can be defined
+- light color can be specified
+
+## Materials
+
+
+
 # Formats
 
 ## FBX 
@@ -237,7 +313,15 @@ Unity does not remove "Armature" root nodes and doesn't have an option for it.
 Blender Docs: https://docs.blender.org/manual/en/3.3/addons/import_export/scene_fbx.html
 > FBX bones seems to be -X aligned, Blender’s are Y aligned    
 
-## Hard Workflows
+# Workflows
+
+## Simplification / Optimization
+
+### High poly / low poly workflows
+
+### Level of detail
+
+## Complicated Workflows
 
 - import skinned + animated glTF file into Blender, make changes, export again
   - need to be careful with bone orientations, Blender likes flipping into its own format but doesn't allow flipping back
