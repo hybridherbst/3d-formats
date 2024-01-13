@@ -30,6 +30,53 @@ Transparency: not fully supported
 - https://github.com/matiascodesal/awesome-usd  
 - https://remedy-entertainment.github.io/USDBook/  
 
+## Coordinate Systems
+
+Coordinate Systems are at the same time very easy to explain and very hard to get right in practical terms.  
+In contrast to common belief that there are only two coordinte systems, "left-handed" and "right-handed", there are way more –
+The up axis can be positive or negative (in practice most often positive Y or positive Z);  
+the right axis can be positive or negative (in practice positive X or negative X);   
+the forward axis can point into or out of the screen (often +/-Y or +/-Z).  
+
+> Right-handed means when you place an imaginary screw perpendicular to both X and Y and then rotate X axis to Y axis, the screw goes in the direction of Z axis.
+
+Often, coordinate system conversions are "avoided" by rotating objects around 90 or 180 degrees or introducing rotated/flipped root objects; this is incorrect and most often leads to roundtrip errors. A better way is converting coordinates into the right system, which may also involve converting UV data, animation data, textures, cameras and lights.  
+
+This defines a world coordinate system to place geometry in. However, there are more coordinate systems to think about:
+- texture coordinates may start at the bottom left or the top left
+- cameras may point along positive or negative Y or Z ("forward" or "backward")
+- lights are often, but not always, defined the same way as cameras (which axis is "forward")
+- some applications have an opinion on the correct axis for bones (e.g. which axis is "along the bone")
+
+To make matters worse, there are varying definitions on what "forward" means in any given application, completely independent from its coordinate system convention. This has most often to do with the placement of a "default viewer camera" in that application – it can point along forward (so that by default you look at the back of an object) or it can point along backward (so that by default you look at the forward-facing side of an object).  
+This makes conversion between applications especially challenging if those applications have implicit, non-user-definable camera positions, such as pure 3D viewers like model-viewer, or AR viewers like QuickLook (Apple iOS AR) or SceneViewer (Google AR). If those default camera views point in different directions than a conversion has to introduce a 180° rotation, even when that rotation means the actual data isn't strictly converted anymore.   
+
+USD: Y-up X-right Z-forward or Z-up
+glTF: Y-up X-left Z-forward
+FBX: by default [Y-Up axis system, right handed](http://docs.autodesk.com/FBX/2014/ENU/FBX-SDK-Documentation/index.html?url=cpp_ref/class_fbx_axis_system.html,topicNumber=cpp_ref_class_fbx_axis_system_htmle2f8a724-6003-4f26-86af-3a3436199372)
+- very configurable which has led to some applications (e.g. Blender) allowing to flip axis arbitrarily on import
+Unity: Y-up X-right Z-forward
+
+
+| Software / Standard |	Default System |	Handedness |
+|-|-|-|
+| 3ds Max	| Z-up	| right-handed| 	
+| Blender	| Z-up	| right-handed	| 
+| Bullet/Ammo.js	| Y-up	| right-handed| 
+| Cinema4D	| Y-up	| left-handed	| 
+| DirectX	| Y-up| 	left-handed	| 
+| Houdini| 	Y-up| 	right-handed| 
+| Maya	| Y-up	| right-handed, configurable to Z-up right-handed| 
+| OpenGL/WebGL/glTF	| Y-up	| right-handed | 
+| Three.js| 	Y-up| 	right-handed| 
+| Unity | 	Y-up	| left-handed	| 
+| Unreal Engine	| Z-up	| left-handed	| 
+| Verge3D	| Y-up	| right-handed	| 
+| WebGPU | 	Y-up | left-handed	| 
+| USD |  Y-up or Z-up | right-handed |  
+
+[Nice summary](https://www.soft8soft.com/wiki/index.php/Coordinate_Systems)
+
 ## Textures
 
 ### UV Coordinate System
