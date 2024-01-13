@@ -142,7 +142,9 @@ Viewers that support only a limited amount of blend shapes have varying strategi
 
 ### Terminology
 
-- FBX: AnimStacks + AnimLayer + AnimCurveNode (AnimLayer rarely used / usually only one)  
+- FBX: AnimStacks + AnimLayer + AnimCurveNode (AnimLayer rarely used / usually only one)
+  - AnimLayer can blend between multiple animations (BlendMode/AccumulationMode)
+  - animations can target pretty much anything
 - Blender: NLA strips + actions + F-Curves   
 - glTF: animations + channels  
 - USD: [valueClips/clipSets](https://graphics.pixar.com/usd/release/api/_usd__page__value_clips.html) + timeSamples on attributes (without clip sets, only one animation is supported)  
@@ -156,13 +158,23 @@ Viewers that support only a limited amount of blend shapes have varying strategi
 - glTF: per channel – constant, linear, cubic  
 - three.js: per AnimationTrack – Discrete (constant), Linear, Smooth (Cubic), can create custom interpolators    
 - Blender: per keyframe – constant, linear, bézier (configured via in/out tangents)  
-- USD: per attribute – held (constant) or linear  
+- USD: per attribute – held (constant) or linear
+- FBX: per keyframe – constant, linear, cubic, freeform, [various auto modes](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_anim_curve_def.html#pub-types), in/out velocity per keyframe
 
 ### Sequencing of animations
 
 Arranging animations on a timeline  
 Blending/Mixing of animations 
 Animation layers 
+
+## Audio
+
+- FBX: [FBXAudioLayer](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_audio_layer.html)
+- USD: UsdAudio (supported in QuickLook, not supported in usdview)
+- glTF: KHR_audio (not ratified)
+- Blender: audio clips / tracks
+- Unity: AudioSource / AudioClip
+- three.js: PositionalAudio / Audio
 
 # Formats
 
