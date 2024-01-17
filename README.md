@@ -156,7 +156,7 @@ Usually 1, 2, 4, 8 or more bones can influence a single vertex (has a performanc
 Since skinned meshes are usually driven by bones, their own transformation doesn't / shouldn't matter. Despite this, transforming the skinned mesh itself can lead to culling errors or lighting problems. 
 Some formats enforce bones to all be hierarchical children of the skinned mesh, others allow arbitrary hierarchies. 
 
-## Blend Shapes
+## Blend Shapes / Shape Keys / Morph Targets
 
 In some cases, deformations are too complex to represent them with bones. One example of such complex deformations are animated faces.  
 To represent them, additional data can be stored per vertex that defines additional vertex positions. These are called blend shapes, shape keys, morph targets or similar.  
@@ -166,13 +166,20 @@ Usually, data is stored additively — that means only the difference in data to
 
 Some formats (e.g. glTF) define that viewers must recalculate normal and tangent data when missing, which means often only vertices need to be stored.  
 
-Blend shapes can and often are combined with bone animations. Typical cases include humanoid meshes with rigged heads (neck/skull/yaw/eyes) and shapes for facial expression. 
+Blend shapes can and often are combined with bone animations. Typical cases include humanoid meshes with rigged heads (neck/skull/yaw/eyes) and shapes for facial expression.  
 
-### Common systems 
+As blend shapes are interpolated linearly between each other, some applications support _in-between_ shapes, so that a series of shapes can be driven by a single value. This can always be baked down to individual blend shapes, but is nicer to author/animate. 
+Alternative name: _progressive morphing_ (3ds Max) 
 
-FACS
-Apple
-Google
+In-between shapes are supported in: FBX, [USD](https://openusd.org/release/api/_usd_skel__schemas.html#UsdSkel_BlendShape_Inbetweens), [Unity](https://docs.unity3d.com/ScriptReference/Mesh.GetBlendShapeFrameWeight.html), [Maya](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-FF40A342-2F43-42C5-A8C9-8C5E3D91B565), [3ds Max](https://help.autodesk.com/view/3DSMAX/2024/ENU/?guid=GUID-506247E2-1F5D-4857-998E-8256FD88626D#:~:text=To%20use%20progressive%20morphing%3A)  
+They are not supported in: glTF, Blender, Unreal  
+
+### Common systems and base meshes
+
+- FACS
+- Apple
+- Google
+- iClone
 
 ### Target count limitations
 
