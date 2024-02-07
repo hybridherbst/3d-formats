@@ -134,6 +134,13 @@ Default look direction - may be different between viewers, not just file formats
 Some viewers by default look _at_ the forward-facing side of a model, some viewers look _along_ the forward direction. 
 For example, while coordinate systems match between glTF and USD, the default view direction is flipped.  
 
+| Software | Default camera | Identity camera | Model forward |
+| - | - | - | - |
+| Blender | Default camera looks along +Y | Identity camera looks along -Z | Model forward is -Y |
+| Unity | Default camera looks along +Z | Identity camera looks along +Z | Model forward is +Z |
+| three.js | Default camera looks along -Z | Identity camera looks along -Z | Model forward is +Z |
+
+
 ## Skinning
 
 ### Bones and skins
@@ -260,8 +267,6 @@ glTF: arbitrary number of skeletons per file
 - bones are regular nodes and part of the hierarchy
 - bones can be used by multiple skeletons
 - bones don't need to be parented to their skeleton or each other
-
-## Cameras
 
 ## Lights
 
