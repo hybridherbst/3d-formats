@@ -291,6 +291,7 @@ glTF: [KHR_lights_punctual](https://github.com/KhronosGroup/glTF/blob/main/exten
 Lights are treated as punctual (zero size). 
 - directional (lux (lm/m2))
 - point (candela (lm/sr))
+  - distance = 0 is not allowed, undefined should result in infinite distance
 - spot (candela (lm/sr))
   - inner/outer cone angle
 - Decay: physical (inverse square) and additional falloff with a "range" parameter
@@ -298,7 +299,7 @@ Lights are treated as punctual (zero size).
 - light color can be specified
 
 FBX: [FBXLight](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_light.html#ad5d0e87f61ba99c47a539492df7917a1)
-- Point 	
+- Point
 - Directional 	
 - Spot 	
 - Area (Rectangle, Sphere) 	
@@ -307,9 +308,46 @@ FBX: [FBXLight](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/
 - Shadows: can be defined
 - light color can be specified
 
+Blender:   
+- Point
+  - Distance = 0 turns the light off
+- Sun (Directional)
+- Spot
+- Area
+
+Unity:  
+- Point
+  - Distance = 0 turns the light off
+- Directional
+- Spot
+- Area (baked only in URP + BiRP, realtime in HDRP)
+- Lights are effectively used as unitless in URP + BiRP, and with physical units in HDRP (e.g. Directional Light as sun: intensity 100.000)
+- Unity imports FBX lights incorrectly in URP – they end up in the wrong color space (need a gamma > linear step).
+- Unity imports FBX lights incorrectly in BiRP too, and also emissive colors are wrong (so they match but are both wrong)
+
 ## Materials
 
+### glTF
+- PBR material model in core
+- material extensions allow for complex and well-defined shading
+- no node-based shaders (KHR_procedurals in the works)
+- unlit material support via extension
 
+### USD
+- UsdPreviewSurface
+  - fixed definition of surface materials
+  - only "opacity" which functions as transmission
+  - can choose between "opacity" and "masked, not combine them
+  - relationship between opacity and emission not clearly defined
+- UsdShade
+  - node-based shading networks
+- UsdShade can contain MaterialX data
+
+### FBX
+- only "Phong" and "Lambert" surface models, no support for "Unlit" materials
+- Materials are often exporter-specific (e.g. Maya, 3ds Max write materials very differently with app-specific data)
+- Material importers can often import the FBX material descriptions from multiple exporters (e.g. Maya-specific, 3dsmax-specific)
+- Unity has postprocessors for MaterialDescriptions to read more data than Unity supports, and modify generated materials from it
 
 # Formats
 
