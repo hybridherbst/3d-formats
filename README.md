@@ -325,6 +325,16 @@ Unity:
 - Unity imports FBX lights incorrectly in URP – they end up in the wrong color space (need a gamma > linear step).
 - Unity imports FBX lights incorrectly in BiRP too, and also emissive colors are wrong (so they match but are both wrong)
 
+Links:
+- https://github.com/KhronosGroup/glTF-Blender-IO/issues/564
+- https://github.com/KhronosGroup/glTF/pull/2214#issuecomment-1278292085
+- [Spreadsheet by Ben Houston for light values across engines](https://docs.google.com/spreadsheets/d/1Ce9XCC2Ub9eVjAQdYbYdLvlkDBJ_0GtAyRbSF0KJWzE/edit#gid=0)
+- [Switching Godot to physical light units](https://docs.godotengine.org/en/stable/tutorials/3d/physical_light_and_camera_units.html)
+- [FBX Docs regarding Light Intensity](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_light.html#a2e527b1e7376f74d60b5b7881588295a)
+- [FBX lights in FBX2glTF](https://github.com/godotengine/FBX2glTF/blob/c4168ca4da65a43cbebbd1ce4ee39a768b47252e/src/fbx/Fbx2Raw.cpp#L493) [and this](https://github.com/godotengine/FBX2glTF/blob/c4168ca4da65a43cbebbd1ce4ee39a768b47252e/src/gltf/Raw2Gltf.cpp#L919)
+- [FBX lights in three.js]()
+- [glTF light export in Blender](https://github.com/KhronosGroup/glTF-Blender-IO/blob/949429900a7899efa12323bea4a57ac92b5b68e6/addons/io_scene_gltf2/blender/exp/gltf2_blender_gather_lights.py#L95)
+
 ## Materials
 
 ### glTF
