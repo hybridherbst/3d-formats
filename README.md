@@ -241,7 +241,7 @@ Another example are characters, where a controlled character might have states s
   - Blend Trees provide additional blending capabilities beyond transitioning from one state to another.
   - Each state has a choice of "Write Defaults" or not. Basically, this collects all animated objects of the entire Animator at start and sets their "at rest" values when a state does not have an opinion for some objects animated by other states.
 - three.js: AnimationMixer / PropertyMixer. States and transitions are handled manually, states can be blended together. 
-  - Each property is reset after a binding stops. Effectively, this has the same result as "Write defaults".
+  - [Each property is reset after a binding stops](https://github.com/mrdoob/three.js/blob/dev/src/animation/PropertyMixer.js#L214). Effectively, this has the same result as "Write defaults".
 - Blender: no
 - USD: no
 
