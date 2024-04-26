@@ -228,6 +228,23 @@ Arranging animations on a timeline
 Blending/Mixing of animations 
 Animation layers 
 
+- Unity: PlayableDirector
+- glTF: no
+- FBX: no
+- USD: clips on a stage
+
+### Animation states and transitions
+State management is often used in interactive applications. For example, a UI element might have states such as "normal", "hovered", "clicked" and so on, that each have their own animation data to apply to the UI element graphics. 
+Another example are characters, where a controlled character might have states such as "idle", "walk", "run", "walk left" and so on, which can be mixed depending on user input or machine input.  
+
+- Unity: Animator. States can have additional code and logic executed on enter/exit/stay.
+  - Blend Trees provide additional blending capabilities beyond transitioning from one state to another.
+  - Each state has a choice of "Write Defaults" or not. Basically, this collects all animated objects of the entire Animator at start and sets their "at rest" values when a state does not have an opinion for some objects animated by other states.
+- three.js: AnimationMixer / PropertyMixer. States and transitions are handled manually, states can be blended together. 
+  - Each property is reset after a binding stops. Effectively, this has the same result as "Write defaults".
+- Blender: no
+- USD: no
+
 ## Audio
 
 - FBX: [FBXAudioLayer](https://help.autodesk.com/cloudhelp/2019/ENU/FBX-Developer-Help/cpp_ref/class_fbx_audio_layer.html)
